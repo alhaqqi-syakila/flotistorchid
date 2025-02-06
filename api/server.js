@@ -8,9 +8,9 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Default port jika tidak ada di .env
+const PORT = process.env.PORT; // Default port jika tidak ada di .env
 
-Middleware
+// Middleware
 app.use(cors({
   origin: "https://flotistorchid.vercel.app", // Pastikan tanpa trailing slash
   methods: ["POST", "GET", "PUT", "DELETE"],
@@ -20,8 +20,9 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Setup session tanpa Redis, menggunakan MySQL
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'alamak',
+  secret: process.env.SESSION_SECRET,  // Ganti jika perlu
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -32,14 +33,6 @@ app.use(session({
 }));
 
 // Database connection pool
-// const pool = mysql.createPool({
-//   host: 'localhost',
-//   user: 'root',
-//   password:  '',
-//   database: 'fatima_collection',
-//   connectTimeout: 10000
-// });
-
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -53,8 +46,6 @@ const pool = mysql.createPool({
   namedPlaceholders: true // Tambahkan ini
 });
 
-
-
 pool.getConnection()
   .then(conn => {
     console.log("Database connected successfully!");
@@ -65,11 +56,12 @@ pool.getConnection()
   });
 
 // Serve static files
-app.use(express.static(path.join(__dirname, "../public")));
+// Pastikan path file statis sudah benar di Vercel
+app.use(express.static(path.join(__dirname, "public")));
 
 // Root route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Register endpoint
