@@ -191,6 +191,11 @@ app.get("/check-session", (req, res) => {
   res.json({ session: req.session });
 });
 
+// Contoh endpoint API
+app.get("/api/hello", (req, res) => {
+  res.json({ message: "Hello from Vercel!" });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
