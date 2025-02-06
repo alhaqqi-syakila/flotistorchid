@@ -69,8 +69,9 @@ pool.getConnection()
     conn.release();
   })
   .catch(err => {
-    console.error("Database connection failed:", err);
+    console.error("Database connection failed:", err.message);
   });
+
 
 // Serve static files (opsional, jika menggunakan Vercel static hosting)
 // app.use(express.static(path.join(__dirname, "public")));
