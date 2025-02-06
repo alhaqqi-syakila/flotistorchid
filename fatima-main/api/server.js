@@ -45,12 +45,14 @@ const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306, 
-  ssl: { rejectUnauthorized: false }, // Tambahkan SSL agar cocok dengan Clever Cloud
+  port: process.env.DB_PORT || 3306,
+  ssl: { rejectUnauthorized: false }, // SSL Wajib untuk Clever Cloud
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  namedPlaceholders: true // Tambahkan ini
 });
+
 
 
 pool.getConnection()
