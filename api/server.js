@@ -5,10 +5,11 @@ const bcrypt = require('bcryptjs');
 const path = require('path');
 const mysql = require("mysql2/promise");
 const cors = require('cors');
+const MySQLStore = require('express-mysql-session')(session); // Tambahkan session store
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT; // Default port jika tidak ada di .env
+const PORT = process.env.PORT || 3000; // Default port untuk development
 
 // Middleware
 app.use(cors({
@@ -20,9 +21,22 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Setup session tanpa Redis, menggunakan MySQL
+// Setup session dengan MySQL store
+const sessionStore = new MySQLStore({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: {
+    rejectUnauthorized: false
+  },
+  createDatabaseTable: true // Buat tabel sessions jika belum ada
+});
+
 app.use(session({
-  secret: process.env.SESSION_SECRET,  // Ganti jika perlu
+  secret: process.env.SESSION_SECRET,
+  store: sessionStore, // Gunakan MySQL store
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -43,9 +57,12 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
-  namedPlaceholders: true // Tambahkan ini
+  namedPlaceholders: true,
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0
 });
 
+// Test database connection
 pool.getConnection()
   .then(conn => {
     console.log("Database connected successfully!");
@@ -55,14 +72,13 @@ pool.getConnection()
     console.error("Database connection failed:", err);
   });
 
-// Serve static files
-// Pastikan path file statis sudah benar di Vercel
-app.use(express.static(path.join(__dirname, "public")));
+// Serve static files (opsional, jika menggunakan Vercel static hosting)
+// app.use(express.static(path.join(__dirname, "public")));
 
-// Root route
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+// Root route (opsional, jika menggunakan Vercel static hosting)
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "index.html"));
+// });
 
 // Register endpoint
 app.post("/register", async (req, res) => {
