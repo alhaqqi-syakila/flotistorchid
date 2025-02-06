@@ -1,0 +1,30 @@
+# Node.js modules
+/node_modules/
+
+# Environment files (jika berisi kredensial atau konfigurasi sensitif)
+.env
+
+# Log files
+*.log
+
+# Temp files
+*.tmp
+
+# Build or distribution folders
+/dist/
+/build/
+
+# Editor or IDE configuration
+.vscode/
+/.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files (Windows, macOS, Linux)
+.DS_Store
+Thumbs.db
+
+# npm debug file
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

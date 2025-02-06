@@ -1,0 +1,63 @@
+/* Payment Page Styles */
+.payment-container {
+    padding: 2rem 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.payment-details {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-summary {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #f8f8f8;
+    border-radius: 8px;
+}
+
+.transaction-summary h3 {
+    color: #1F473E;
+    margin-bottom: 1rem;
+}
+
+.payment-methods {
+    display: grid;
+    gap: 1rem;
+}
+
+.pay-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pay-btn:hover {
+    border-color: #1F473E;
+    background: #f8f8f8;
+}
+
+.pay-btn i {
+    font-size: 1.5rem;
+    color: #1F473E;
+}
+
+@media (max-width: 768px) {
+    .payment-details {
+        padding: 1.5rem;
+    }
+    
+    .pay-btn {
+        padding: 1rem;
+    }
+}

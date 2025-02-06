@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Fatima Collection</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-name">Fatima Collection</div>
+            <a href="products.html"><button class="btn-nav">Kembali</button></a>
+        </nav>
+    </header>
+
+    <main class="checkout-container">
+        <div class="checkout-details">
+            <h1>Checkout</h1>
+            
+            <div id="productSummary">
+                <!-- Detail produk akan diisi oleh JavaScript -->
+            </div>
+
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="name">Nama Lengkap:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Alamat Pengiriman:</label>
+                    <textarea id="address" name="address" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">No. HP:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Jumlah tangkai (min 3 tangkai):</label>
+                    <input type="number" id="quantity" name="quantity" min="3" value="3" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="note">Catatan:</label>
+                    <textarea id="note" name="note"></textarea>
+                </div>
+
+                <div class="total-price">
+                    <h3>Total: <span id="totalAmount">Rp 0</span></h3>
+                </div>
+
+                <button type="submit" class="checkout-btn">Konfirmasi via WhatsApp</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Ambil data produk dari localStorage
+        const productId = localStorage.getItem('selectedProduct');
+        
+        // Fetch detail produk
+        fetch(`http://localhost:3000/product/${productId}`)
+            .then(response => response.json())
+            .then(product => {
+                const productSummary = document.getElementById('productSummary');
+                const quantityInput = document.getElementById('quantity');
+                const totalAmount = document.getElementById('totalAmount');
+
+                // Tampilkan detail produk
+                productSummary.innerHTML = `
+                    <div class="checkout-product">
+                        <img src="${product.image_url}" alt="${product.name}">
+                        <div>
+                            <h3>${product.name}</h3>
+                            <p>Harga Satuan: Rp ${product.price.toLocaleString()}</p>
+                        </div>
+                    </div>
+                `;
+
+                // Update total harga
+                const updateTotal = () => {
+                    const total = product.price * quantityInput.value;
+                    totalAmount.textContent = `Rp ${total.toLocaleString()}`;
+                };
+
+                quantityInput.addEventListener('input', updateTotal);
+                updateTotal();
+
+                // Handle form submission
+                document.getElementById('checkoutForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const formData = {
+                        productId: product.id,
+                        productName: product.name,
+                        quantity: quantityInput.value,
+                        totalPrice: product.price * quantityInput.value,
+                        customer: {
+                            name: document.getElementById('name').value,
+                            address: document.getElementById('address').value,
+                            email: document.getElementById('email').value,
+                            phone: document.getElementById('phone').value,
+                            note: document.getElementById('note').value
+                        }
+                    };
+
+                    // Simpan data ke localStorage
+                    localStorage.setItem('transactionData', JSON.stringify(formData));
+
+                    // Redirect ke WhatsApp
+                    const phoneNumber = '+62895334181531'; // Nomor WhatsApp admin
+                    const message = `Halo, saya ingin memesan:\n\n` +
+                                   `Produk: ${formData.productName}\n` +
+                                   `Jumlah: ${formData.quantity}\n` +
+                                   `Total: Rp ${formData.totalPrice.toLocaleString()}\n\n` +
+                                   `Nama: ${formData.customer.name}\n` +
+                                   `Alamat: ${formData.customer.address}\n` +
+                                   `No. HP: ${formData.customer.phone}\n` +
+                                   `Email: ${formData.customer.email}\n` +
+                                   `Catatan: ${formData.customer.note || '-'}`;
+
+                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                    window.location.href = whatsappUrl;
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                window.location.href = 'products.html';
+            });
+    </script>
+</body>
+</html>

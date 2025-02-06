@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Fatima Collection</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/products.css">
+    <script src='https://kit.fontawesome.com/7f1688b379.js' crossorigin='anonymous'></script>
+</head>
+<body>
+    <header>  
+        <div class="head">
+            <nav>
+                <div class="logo-name">fatima collection.</div>
+                <a href="home.html"><button class="btn-nav">Kembali</button></a>
+            </nav>
+        </div>  
+    </header>
+
+    <main class="products-container">
+        <h1>Koleksi Bunga Terbaru</h1>
+        
+        <!-- Input Pencarian -->
+        <input type="text" id="searchInput" placeholder="Cari bunga..." class="search-box">
+        
+        <div class="product-grid" id="productList">
+            <!-- Product cards akan diisi oleh JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        let productsData = [];
+
+        // Fetch produk dari API
+        fetch('http://localhost:3000/products')
+            .then(response => response.json())
+            .then(products => {
+                productsData = products;
+                displayProducts(products);
+            });
+
+        function displayProducts(products) {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = `
+                    <div class="product-card">
+                        <img src="${product.image_url}" alt="${product.name}" class="product-image">
+                        <div class="product-details">
+                            <h3>${product.name}</h3>
+                            <p class="product-description">${product.description}</p>
+                            <h5 class="product-price">Rp ${product.price.toLocaleString()}</h5>
+                            <button class="buy-btn" data-id="${product.id}">Beli</button>
+                        </div>
+                    </div>
+                `;
+                productList.innerHTML += productCard;
+            });
+
+            document.querySelectorAll('.buy-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const productId = button.dataset.id;
+                    localStorage.setItem('selectedProduct', productId);
+                    window.location.href = 'checkout.html';
+                });
+            });
+        }
+
+        // Fitur pencarian
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const filteredProducts = productsData.filter(product =>
+                product.name.toLowerCase().includes(searchTerm)
+            );
+            displayProducts(filteredProducts);
+        });
+    </script>
+</body>
+</html>

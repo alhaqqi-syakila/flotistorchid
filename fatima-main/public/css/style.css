@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Martian+Mono:wght@600;700&family=Merriweather:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Roboto:wght@100;300;400;500;700&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200&family=Tilt+Warp&family=Ubuntu:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #1F473E;
+    padding: 1rem 0;
+    text-align: center;
+    position: sticky; /* Membuat navbar sticky */
+    top: 0; /* Menempel di bagian atas */
+    z-index: 1000; /* Memastikan navbar di atas elemen lain */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.logo-name {
+    color: #ffce0a;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.btn-nav {
+    background-color: #ffce0a;
+    color: #1F473E;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-nav:hover {
+    background-color: #e0b800;
+}
+
+main {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #1F473E;
+    text-align: center;
+    margin: 1rem 0;
+    
+}
+
+.title {
+    font-size: 2.5rem;
+    color: #1F473E;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.deskripsi {
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 8rem;
+}
+
+.buy-btn {
+    background-color: #ffce0a;
+    color: #1F473E;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+.buy-btn:hover {
+    background-color: #e0b800;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-card .product-details {
+    padding: 1rem;
+    text-align: center;
+}
+
+.product-card h3 {
+    font-size: 1.2rem;
+    color: #1F473E;
+    margin-bottom: 0.5rem;
+}
+
+.product-card p {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.product-details p {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Jumlah baris maksimal */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.product-details h5 {
+    font-size: 1.2rem;
+    color: #ffae00;
+    line-height: 1.4;
+    margin: 2rem 0 0;
+}
+
+
+footer {
+    background-color: #1F473E;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #ffce0a;
+}
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.footer-contact li {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.footer-contact i {
+    color: #ffce0a;
+    margin-right: 0.5rem;
+}
+
+.social-icons a {
+    color: #ffce0a;
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    border-top: 1px solid #ffce0a;
+    padding-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.search-box {
+    margin: 4rem 0 0 0;
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #1F473E;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-box:focus {
+    border-color: #ffce0a;
+}
+
+
+@media (max-width: 768px) {
+
+    header, main, footer {
+        padding: 1.2rem 2rem;
+    }
+    .title {
+        font-size: 2rem;
+    }
+
+    .deskripsi {
+        font-size: 0.9rem;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+        gap: 1rem; /* Kurangi gap agar card tetap muat */
+    }
+
+    .product-card {
+        height: auto; /* Biarkan tinggi card menyesuaikan konten */
+    }
+
+    .product-card img {
+        height: 120px; /* Kurangi tinggi gambar di mobile */
+        
+    }
+
+    .product-details {
+        height: auto; /* Biarkan tinggi details menyesuaikan konten */
+        padding: 0.8rem; /* Kurangi padding di mobile */
+    }
+
+    .product-details h3 {
+        font-size: .9rem; /* Perkecil ukuran judul di mobile */
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* Jumlah baris maksimal */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .product-details p {
+        font-size: 0.8rem; /* Perkecil ukuran deskripsi di mobile */
+    }
+    
+    .search-box {
+        width: 100%;
+        max-width: 100%;
+        margin:2rem 0 0;
+        padding: .6rem;
+    }
+
+    .search-btn {
+        width: 100%;
+    }
+
+    .logo-name {
+        font-size: 1rem;
+    }
+}
+
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #ffce0a;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
