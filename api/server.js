@@ -10,12 +10,12 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000; // Default port jika tidak ada di .env
 
-// Middleware
-// app.use(cors({
-//   origin: "https://flotist-app.vercel.app", // Pastikan tanpa trailing slash
-//   methods: ["POST", "GET", "PUT", "DELETE"],
-//   credentials: true
-// }));
+Middleware
+app.use(cors({
+  origin: "https://flotistorchid.vercel.app", // Pastikan tanpa trailing slash
+  methods: ["POST", "GET", "PUT", "DELETE"],
+  credentials: true
+}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
