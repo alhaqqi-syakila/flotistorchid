@@ -197,9 +197,20 @@ app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello from Vercel!" });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.get("/test-db", async (req, res) => {
+  try {
+    const [result] = await pool.query("SELECT NOW() AS time");
+    res.json({ message: "Database connected!", time: result[0].time });
+  } catch (err) {
+    console.error("Database connection error:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
+
+
+// Start server
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
 
 module.exports = app;
